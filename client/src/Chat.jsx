@@ -2,8 +2,8 @@
  * Chat widget
  */
 import React from 'react';
-import { Container } from 'shards-react';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
+import { Container, Row, Col, FormInput, Button } from 'shards-react';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery, useMutation } from '@apollo/client';
 
 // GraphQL Query | https://www.apollographql.com/docs/react/data/queries/#executing-a-query
 const GET_MESSAGES = gql`
@@ -15,13 +15,23 @@ const GET_MESSAGES = gql`
     }
   }
 `;
+// GraphQL Mutation | https://www.apollographql.com/docs/react/data/mutations/#executing-a-mutation
+const POST_MESSAGES = gql`
+  mutation($user: String!
+          ,$content: String!
+  ){
+    postMessage (user: $user
+                ,content: $content)
+  }
+`;
 
 const Messages = ({ loginUser }) => {
-  const { data } = useQuery(GET_MESSAGES);
-  if (!data)
-    return null;
+  const { data } = useQuery(GET_MESSAGES, {
+    // GraphQL Query Polling | https://www.apollographql.com/docs/react/data/queries/#polling
+    // pollInterval: 500, // every 0.5s polling
+  });
 
-  return (
+  return !data ? null : (
     <>
       {data.messages.map(({ id, content, user: sendUser }) => (
         <div
@@ -73,10 +83,62 @@ const client = new ApolloClient({
 
 // ApolloProvider | https://www.apollographql.com/docs/react/get-started/#connect-your-client-to-react
 const Chat = () => { // Somthing Like redux..
+  const [state, stateSet] = React.useState({
+    user: 'devJRL',
+    content: '',
+  });
+
+  // Event of sending message content
+  const [postMessage] = useMutation(POST_MESSAGES);
+  const sendContent = () => {
+    if (state.content.length > 0) {
+      // GraphQL Mutation | https://www.apollographql.com/docs/react/data/mutations/#executing-a-mutation
+      postMessage({ variables: state });
+    }
+    stateSet({
+      ...state,
+      content: '',
+    })
+  }
+
+  // Shards React : Container | https://designrevision.com/docs/shards-react/component/container
   return (
     <Container>
-      <Messages loginUser="devJRL" />
-    </Container>
+      <Messages loginUser={state.user} />
+      <Row>
+        <Col xs={2} style={{ padding: 0 }}>
+          <FormInput
+            label="User"
+            value={state.user}
+            onChange={(event) => stateSet({
+              ...state,
+              user: event.target.value,
+            })}
+          />
+        </Col>
+
+        <Col xs={8}>
+          <FormInput
+            label="Content"
+            value={state.content}
+            onChange={(event) => stateSet({
+              ...state,
+              content: event.target.value,
+            })}
+            onKeyUp={(event) => {
+              if (event.keyCode === 13)
+                sendContent();
+            }}
+          />
+        </Col>
+
+        <Col xs={2} style={{ padding: 0 }}>
+          <Button onClick={() => sendContent()}>
+            Send
+          </Button>
+        </Col>
+      </Row>
+    </Container >
   );
 };
 
