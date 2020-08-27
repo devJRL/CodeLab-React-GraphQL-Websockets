@@ -2,12 +2,13 @@
  * Chat widget
  */
 import React from 'react';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, useSubscription, useMutation } from '@apollo/client';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { Container, Row, Col, FormInput, Button } from 'shards-react';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery, useMutation } from '@apollo/client';
 
 // GraphQL Query | https://www.apollographql.com/docs/react/data/queries/#executing-a-query
 const GET_MESSAGES = gql`
-  query {
+  subscription {
     messages {
       id
       content
@@ -26,10 +27,8 @@ const POST_MESSAGES = gql`
 `;
 
 const Messages = ({ loginUser }) => {
-  const { data } = useQuery(GET_MESSAGES, {
-    // GraphQL Query Polling | https://www.apollographql.com/docs/react/data/queries/#polling
-    // pollInterval: 500, // every 0.5s polling
-  });
+  // Using Subscription, we don't need to polling
+  const { data } = useSubscription(GET_MESSAGES);
 
   return !data ? null : (
     <>
@@ -75,8 +74,17 @@ const Messages = ({ loginUser }) => {
   );
 }
 
+// Apollo Subscription WebSocket | https://www.apollographql.com/docs/react/data/subscriptions/#2-initialize-a-websocketlink
+const link = new WebSocketLink({
+  uri: `ws://localhost:4000/`,
+  options: {
+    reconnect: true
+  }
+});
+
 // ApolloClient | https://www.apollographql.com/docs/react/get-started/#create-a-client
 const client = new ApolloClient({
+  link, // Subscribe using WebSocket
   uri: 'http://localhost:4000', // GraphQL Server Endpoint
   cache: new InMemoryCache()
 });

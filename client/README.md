@@ -22,6 +22,10 @@ yarn add shards-react
 # Apollo: For Manage GraphQL
 # Docs | https://www.apollographql.com/docs/react/get-started
 yarn add @apollo/client graphql
+
+# Apollo: WebSockets for subscription transport (on client side)
+# Docs | https://www.apollographql.com/docs/react/data/subscriptions/#setting-up-the-transport
+yarn add subscriptions-transport-ws
 ```
 
 
