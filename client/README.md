@@ -9,6 +9,7 @@ How to scaffold
 ```bash
 yarn add global degit
 npx degit https://github.com/jherr/wp5-starter-react.git#main client
+cd client
 yarn
 ```
 
