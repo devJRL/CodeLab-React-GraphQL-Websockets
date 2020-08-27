@@ -3,7 +3,8 @@
 ## Tree
 
 - [GraphQL Server](./server)
-- [React Client](./client)
+- [React Client (Chatting Sample)](./client)
+- [HomePage (for Customer)](./home-page)
 
 ## How to start
 
@@ -20,3 +21,8 @@ cd server && yarn start
 # Start React Client Server > http://localhost:8080
 cd client && yarn start
 ```
+
+## Reference
+
+- [Realtime Chat App](https://youtu.be/E3NHd-PkLrQ)
+- [jherr/chat-o-matic (template)](https://github.com/jherr/chat-o-matic)
