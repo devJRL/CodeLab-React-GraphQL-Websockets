@@ -98,3 +98,14 @@ query {
   }
 }
 ```
+
+```sql
+# [GQL-Q4] In new tab, we can subscribe messages!
+subscription {
+  messages {
+    id
+    user
+    content
+  }
+}
+```
