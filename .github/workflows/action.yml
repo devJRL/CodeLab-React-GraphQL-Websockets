@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       // Action Environment
-      - uses: actions/checkout@v2.3.2
+      - name: Init from actions/checkout
+        uses: actions/checkout@v2.3.2
         with: path: './server'
       - uses: actions/setup-node@v1.4.3
         with: node-version: '12.x'
