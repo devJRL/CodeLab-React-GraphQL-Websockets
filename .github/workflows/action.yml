@@ -27,8 +27,8 @@ jobs:
         run: npm install
   
   server-CD:
-    name: GraphQL Server CD on docker
     needs: server-CI
+    name: GraphQL Server CD on docker
     runs-on: ubuntu-latest
     steps:
       - name: Prepare checkout action
