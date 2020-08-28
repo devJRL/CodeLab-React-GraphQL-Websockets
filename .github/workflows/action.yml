@@ -1,0 +1,43 @@
+name: Chatting App CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  server-CI:
+    runs-on: ubuntu-latest
+    steps:
+      // Action Environment
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with: node-version: '12.x'
+      - name: Change directory
+        run: cd server
+      // Prepare & Test App
+      - name: Install node-modules
+        run: |
+          npm install
+          // npm test
+  
+  server-CD:
+    needs: server-CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Docker Build
+        run: docker build -t chat-app .
+      - name: Docker Image Tag
+        run: |
+          docker tag chat-app ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
+          docker tag chat-app ${{ secrets.DOCKER_USER }}/back:latest
+      - name: Docker Image push
+        run |
+          docker push chat-app ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
+          docker push chat-app ${{ secrets.DOCKER_USER }}/back:latest
