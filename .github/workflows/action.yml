@@ -10,9 +10,9 @@ on:
 
 jobs:
   server-CI:
+    name: GraphQL Server CI
     runs-on: ubuntu-latest
     steps:
-      // Action Environment
       - name: Init from actions/checkout
         uses: actions/checkout@v2.3.2
         with: path: './server'
@@ -25,6 +25,7 @@ jobs:
           // npm test
   
   server-CD:
+    name: GraphQL Server CD on docker
     needs: server-CI
     runs-on: ubuntu-latest
     steps:
