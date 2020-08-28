@@ -19,13 +19,11 @@ jobs:
           path: './server'
 
       - name: Prepare node action
-        uses: actions/setup-node@v1.4.3
-        with: node-version: '12.x'
+        uses: actions/setup-node@v1
+        with: node-version: '12'
       
       - name: Install node-modules
-        run: |
-          npm install
-          // npm test
+        run: npm install
   
   server-CD:
     name: GraphQL Server CD on docker
