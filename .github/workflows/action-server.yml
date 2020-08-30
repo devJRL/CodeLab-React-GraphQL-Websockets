@@ -1,4 +1,4 @@
-name: Chatting App CI/CD
+name: Chat-App-Server
 
 on:
   push:
