@@ -44,7 +44,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set Variables
-        run: echo '::set-env name=IMG_NAME::CodeLab-Chat-GraphQL-Server'
+        run: echo '::set-env name=IMG_NAME::codeLab-chat-graphql-server'
 
       - name: Docker Image Build
         run: docker build -t $IMG_NAME .
