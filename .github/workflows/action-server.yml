@@ -44,7 +44,7 @@ jobs:
         with:
           path: server
           dockerfile: server/dockerfile
-          registry: docker.io/dev2sponge
-          repository: codelab-chat-server
+          username: ${{ secrets.DOCKER_USERNAME }}
+          repository: dev2sponge/codelab-chat-server
           tags: latest
           tag_with_sha: true
