@@ -12,11 +12,13 @@ jobs:
   server-CI:
     name: GraphQL Server CI
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./server
     steps:
       - name: Prepare checkout action
         uses: actions/checkout@v2.3.2
-        with:
-          path: "./server"
 
       - name: Prepare node action
         uses: actions/setup-node@v1
@@ -30,6 +32,10 @@ jobs:
     needs: server-CI
     name: GraphQL Server CD on docker
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./server
     steps:
       - name: Prepare checkout action
         uses: actions/checkout@v2.3.2
@@ -39,8 +45,6 @@ jobs:
 
       - name: Docker Build
         run: docker build -t chat-app .
-        with:
-          path: "./server"
 
       - name: Docker Image Tag
         run: |
