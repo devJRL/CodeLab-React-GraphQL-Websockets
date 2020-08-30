@@ -53,5 +53,5 @@ jobs:
 
       - name: Docker Image push
         run: |
-          docker push chat-app ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
-          docker push chat-app ${{ secrets.DOCKER_USER }}/back:latest
+          docker push ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/back:latest
