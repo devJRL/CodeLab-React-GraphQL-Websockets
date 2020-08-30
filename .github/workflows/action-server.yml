@@ -43,19 +43,21 @@ jobs:
       - name: Docker Login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Set Variables
-        run: |
-          export imgName=CodeLab-Chat-GraphQL-Server
-
       - name: Docker Image Build
         run: docker build -t $imgName .
+        env:
+          imgName: CodeLab-Chat-GraphQL-Server
 
       - name: Docker Image Tag
         run: |
           docker tag $imgName ${{ secrets.DOCKER_USER }}/$imgName:${{ github.sha }}
           docker tag $imgName ${{ secrets.DOCKER_USER }}/$imgName:latest
+        env:
+          imgName: CodeLab-Chat-GraphQL-Server
 
       - name: Docker Image push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/$imgName:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USER }}/$imgName:latest
+        env:
+          imgName: CodeLab-Chat-GraphQL-Server
