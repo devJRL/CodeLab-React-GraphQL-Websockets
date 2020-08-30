@@ -16,16 +16,16 @@ jobs:
       - name: Prepare checkout action
         uses: actions/checkout@v2.3.2
         with:
-          path: './server'
+          path: "./server"
 
       - name: Prepare node action
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
-      
+          node-version: "12"
+
       - name: Install node-modules
         run: npm install
-  
+
   server-CD:
     needs: server-CI
     name: GraphQL Server CD on docker
@@ -34,7 +34,7 @@ jobs:
       - name: Prepare checkout action
         uses: actions/checkout@v2.3.2
         with:
-          path: './server'
+          path: "./server"
 
       - name: Docker Login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -48,6 +48,6 @@ jobs:
           docker tag chat-app ${{ secrets.DOCKER_USER }}/back:latest
 
       - name: Docker Image push
-        run |
+        run: |
           docker push chat-app ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
           docker push chat-app ${{ secrets.DOCKER_USER }}/back:latest
