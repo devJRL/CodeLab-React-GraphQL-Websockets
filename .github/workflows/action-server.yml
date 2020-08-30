@@ -47,14 +47,14 @@ jobs:
         run: echo '::set-env name=IMG_NAME::codeLab-chat-server'
 
       - name: Docker Image Build
-        run: docker build -t $IMG_NAME .
+        run: docker build -t $(IMG_NAME) .
 
       - name: Docker Image Tag
         run: |
-          docker tag $IMG_NAME ${{ secrets.DOCKER_USER }}/$IMG_NAME:${{ github.sha }}
-          docker tag $IMG_NAME ${{ secrets.DOCKER_USER }}/$IMG_NAME:latest
+          docker tag $(IMG_NAME) ${{ secrets.DOCKER_USER }}/$(IMG_NAME):${{ github.sha }}
+          docker tag $(IMG_NAME) ${{ secrets.DOCKER_USER }}/$(IMG_NAME):latest
 
       - name: Docker Image push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/$IMG_NAME:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/$IMG_NAME:latest
+          docker push ${{ secrets.DOCKER_USER }}/$(IMG_NAME):${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/$(IMG_NAME):latest
