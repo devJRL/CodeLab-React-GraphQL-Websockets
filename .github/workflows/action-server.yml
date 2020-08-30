@@ -1,4 +1,4 @@
-name: Chat-App-Server
+name: CodeLab Chat GraphQL Server
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
       - master
 
 jobs:
-  server-CI:
-    name: GraphQL Server CI
+  CI:
+    name: CI from Repository
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,9 +28,9 @@ jobs:
       - name: Install node-modules
         run: npm install
 
-  server-CD:
-    needs: server-CI
-    name: GraphQL Server CD on docker
+  CD:
+    needs: CI
+    name: CD to Docker-Hub
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,7 +45,7 @@ jobs:
       - name: Docker Login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Docker Build
+      - name: Docker Image Build
         run: docker build -t $imgName .
 
       - name: Docker Image Tag
