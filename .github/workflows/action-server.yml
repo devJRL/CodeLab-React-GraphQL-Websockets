@@ -48,7 +48,7 @@ jobs:
           echo "::set-env name=IMG_NAME::codeLab-chat-server"
 
       - name: Docker Image Build
-        run: docker build -t $IMG_NAME .
+        run: docker build -t "$IMG_NAME" .
 
       - name: Docker Image Tag
         run: |
