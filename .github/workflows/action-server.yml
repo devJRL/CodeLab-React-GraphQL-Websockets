@@ -44,7 +44,7 @@ jobs:
         with:
           path: server
           dockerfile: server/dockerfile
-          registry: dev2sponge
+          registry: docker.io
           repository: dev2sponge/codelab-chat-server
           tags: latest
           tag_with_sha: true
