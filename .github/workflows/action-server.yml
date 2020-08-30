@@ -46,7 +46,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
         with:
-          repository: dev2sponge/codeLab-chat-server
+          repository: dev2sponge/codelab-chat-server
           push: ${{ startsWith(github.ref, 'refs/tags/') }}
           tags: latest
           tag_with_sha: true
