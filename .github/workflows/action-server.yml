@@ -44,6 +44,5 @@ jobs:
         with:
           path: server
           dockerfile: server/dockerfile
+          tags: dev2spone/codelab-chat-server:latest
           tag_with_sha: true
-          tags: |
-            dev2sponge/codelab-chat-server:latest
