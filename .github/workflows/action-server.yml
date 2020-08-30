@@ -49,9 +49,9 @@ jobs:
       - name: Docker Image Tag
         run: |
           docker tag chat-app ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
-          docker tag chat-app ${{ secrets.DOCKER_USER }}/back:latest
+          docker tag chat-app ${{ secrets.DOCKER_USER }}/chat-app:latest
 
       - name: Docker Image push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/chat-app:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/back:latest
+          docker push ${{ secrets.DOCKER_USER }}/chat-app:latest
